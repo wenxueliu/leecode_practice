@@ -13,11 +13,12 @@ import java.util.Map;
  * refer: https://leetcode-cn.com/problems/roman-to-integer/
  * 11-01
  * 思路：显然没有在 leetcode12 的基础上想出这个这个办法
- * 实现：思路确定，实现很简单。问题在于执行效率不高，仅仅超过 50%
+ * 实现：思路确定，实现很简单。
  *
  * 备注：这里面的各种解法充分说明了 String, HashMap 是性能杀手，要有好的性能，避免使用 String 和 HashMap 等高级数据结构
  */
 public class LeetCode13 {
+    // 时间仅仅 50%
     public int romanToInt(String s) {
         Map<String, Integer> romanToInt = new HashMap<>();
         romanToInt.put("I", 1);
