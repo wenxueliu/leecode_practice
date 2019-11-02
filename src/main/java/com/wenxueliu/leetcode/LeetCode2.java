@@ -4,7 +4,7 @@ package com.wenxueliu.leetcode;
  * @author ： liuwenxue
  * @date ：2019/10/30 00:24
  * @description :
- * @path : com.wenxueliu.leetcode.TowNumber
+ * @path : com.wenxueliu.leetcode.LeetCode2
  * @modifiedBy ：
  *
  * 10-29
@@ -14,12 +14,12 @@ package com.wenxueliu.leetcode;
  * 1. 两个都是空；[] []
  * 2. 一个空，一个非空； [5] [] 或 [] [5]
  * 3. 长度一样有进位 [1, 2, 5] [2, 3, 6]
- * 3. 长度一样无进位 [1, 2, 5] [2, 3, 6]
+ * 3. 长度一样无进位 [1, 2, 5] [2, 3, 3]
  * 4. 长度不一样，较长列表有进位 [1, 2, 5] [2, 3, 6, 8]
  * 5. 长度不一样，较长列表有进位 [1, 2, 5] [2, 3, 6, 9]
  *
  */
-public class TowNumber {
+public class LeetCode2 {
     /*
      * 10.29:
      * 无哨兵解法解法
@@ -100,7 +100,7 @@ public class TowNumber {
      * 10.29:
      * 有哨兵解法
      */
-    public ListNode addTwoNumbers2(ListNode l1, ListNode l2) {
+    public ListNode addTwoNumbers1(ListNode l1, ListNode l2) {
         ListNode p1 = l1;
         ListNode p2 = l2;
 
@@ -158,7 +158,7 @@ public class TowNumber {
      * 10.29:
      * 仅仅减少了一次空赋值，算法时间 就由超过 80% 变为 99.98
      */
-    public ListNode addTwoNumbers3(ListNode l1, ListNode l2) {
+    public ListNode addTwoNumbers2(ListNode l1, ListNode l2) {
         ListNode p1 = l1;
         ListNode p2 = l2;
 
