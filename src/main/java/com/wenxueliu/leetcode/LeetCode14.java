@@ -6,6 +6,10 @@ package com.wenxueliu.leetcode;
  * @description :
  * @path : com.wenxueliu.leetcode.LeetCode14
  * @modifiedBy ：
+ *
+ * 本题黑可用解法：
+ * 1. 分治
+ * 2. trie 树
  */
 public class LeetCode14 {
     /**
@@ -13,7 +17,7 @@ public class LeetCode14 {
      * @param strs
      * @return
      */
-    public String longestCommonPrefix(String[] strs) {
+    public String longestCommonPrefix1(String[] strs) {
         if (strs.length == 0) {
             return "";
         }
@@ -43,5 +47,30 @@ public class LeetCode14 {
             }
         }
         return true;
+    }
+
+    /**
+     * 11-03
+     * 实现: 挨个字符比较是必须的，用 char 性能要好于 String，时间超过95%
+     * @param strs
+     * @return
+     */
+    public String longestCommonPrefix(String[] strs) {
+        if (strs.length == 0) {
+            return "";
+        }
+        int i = 0;
+        //情况一：元素 0 是最短的
+        //情况二：元素 0 不是最短的
+        while (i < strs[0].length()) {
+            char stub = strs[0].charAt(i);
+            for (String str : strs) {
+                if (str.length() == i || str.charAt(i) != stub) {
+                    return strs[0].substring(0, i);
+                }
+            }
+            i++;
+        }
+        return strs[0];
     }
 }
