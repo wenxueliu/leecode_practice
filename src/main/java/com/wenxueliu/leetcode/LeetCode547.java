@@ -1,9 +1,6 @@
 package com.wenxueliu.leetcode;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author ： liuwenxue
@@ -37,8 +34,7 @@ public class LeetCode547 {
             for (int col = row; col < M[0].length; col++) {
                 if (M[row][col] == 1) {
                     res = contains(res, row, col);
-                }
-            }
+                } }
         }
         return res.size();
     }
@@ -68,5 +64,65 @@ public class LeetCode547 {
             elements.add(newSet);
             return elements;
         }
+    }
+
+    /**
+     * 思路：解法一显然没有理解可用考虑用图来解决，这是没有走上正道的原因，解法一采用深度遍历算法
+     * 实现：参考官方解法，用 dfs
+     * @param M
+     * @return
+     */
+    public int findCircleNum1(int[][] M) {
+        int []visited = new int[M.length];
+        int count = 0;
+        for (int row = 0; row < M.length; row++) {
+            if (visited[row] == 0) {
+                visited[row] = 1;
+                dfs(M, visited, row);
+                count++;
+            }
+        }
+        return count;
+    }
+
+    void dfs(int[][]M, int[] visited, int row) {
+        for (int col = 0; col < M.length; col++) {
+            if (visited[col] == 0 && M[row][col] == 1) {
+                visited[col] = 1;
+                dfs(M, visited, col);
+            }
+        }
+    }
+
+
+    /**
+     * 思路：采用广度遍历算法
+     * 实现：bfs，刚开始找不到要领，参考官方解法，利用队列，解决之
+     * 用时：60 分钟
+     * @param M
+     * @return
+     */
+    public int findCircleNum2(int[][] M) {
+        int []visited = new int[M.length];
+        int count = 0;
+        for (int row = 0; row < M.length; row++) {
+            if (visited[row] == 1) {
+                continue;
+            }
+            Queue<Integer> queue = new LinkedList<>();
+            queue.add(row);
+            while (!queue.isEmpty()) {
+                int nextRow = queue.poll();
+                for (int col = 0; col < M.length; col++) {
+                    if (visited[col] == 0 && M[nextRow][col] == 1) {
+                        visited[col] = 1;
+                        queue.add(col);
+                    }
+                }
+            }
+            count++;
+
+        }
+        return count;
     }
 }
