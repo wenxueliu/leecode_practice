@@ -84,4 +84,40 @@ public class LeetCode369 {
         second.next = first;
         return second;
     }
+
+    /**
+     * 快慢指针
+     * @param head
+     * @return
+     */
+    public ListNode plusNum1(ListNode head, int n) {
+        //从右往左指向第一个非 9 的值
+        ListNode slow = head;
+        ListNode fast = head;
+        while (fast != null) {
+            if (fast.val != 9) {
+                slow = fast;
+            }
+            fast = fast.next;
+        }
+
+        if (slow == head && slow.val == 9) {
+            ListNode node = new ListNode(0);
+            slow = node;
+            slow.next = head;
+        }
+
+        slow.val += 1;
+        //slow 后的每个节点加 1 后变为 0
+        ListNode cur = slow.next;
+        while (cur != null) {
+            if (cur.next == null) {
+                cur.val = (cur.val + n) % 10;
+            } else {
+                cur.val = 0;
+            }
+            cur = cur.next;
+        }
+        return slow.next == head ? slow : head;
+    }
 }
