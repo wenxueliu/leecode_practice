@@ -29,4 +29,21 @@ public class LeetCode121 {
         }
         return maxprofit;
     }
+
+    /**
+     * 思路：动态规划，记录第 i 数之前的最大值 "Kadane 算法"
+     * 实现：参考思路
+     * 算法复杂度: O(N)
+     * 空间复杂度: O(1)
+     * @param prices
+     * @return
+     */
+    public int maxProfit1(int[] prices) {
+        int maxCur = 0, maxSoFar = 0;
+        for(int i = 1; i < prices.length; i++) {
+            maxCur = Math.max(0, maxCur += prices[i] - prices[i-1]);
+            maxSoFar = Math.max(maxCur, maxSoFar);
+        }
+        return maxSoFar;
+    }
 }
