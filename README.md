@@ -85,6 +85,12 @@ bug-free
 * [LeetCode1171](https://github.com/wenxueliu/leecode_practice/blob/master/src/main/java/com/wenxueliu/leetcode/LeetCode1171.java)
 
 
+### 解题思路
+
+1. 将问题进行分类，属于哪种类型的算法题
+2. 将问题转化为对应类型的算法描述
+3. 寻找解题思路（每种算是都有固定的套路）
+4. 实现
 
 ### 附录
 
@@ -103,3 +109,32 @@ bug-free
 2. 只有一个元素
 3. 两个元素
 4. 重复元素
+
+### 经验之谈
+
+#### 贪心算法
+
+遇到需要使用贪心算法的题目，一般需要配合优先级队列
+
+#### 动态规划
+
+矩阵类动态规划 : 53, 62, 63, 64
+
+序列类动态规划问题：与前面所有状态都有关系
+
+300，
+
+
+### BFS 和 DFS
+
+求最大值用 DFS，求最小值用 BFS
+
+
+### leetCode 大神
+
+
+https://leetcode-cn.com/u/mike-meng/
+
+https://leetcode-cn.com/u/trsteel/ 
+
+https://leetcode-cn.com/u/ldeng7/ https://github.com/ldeng7/go-leetcode
