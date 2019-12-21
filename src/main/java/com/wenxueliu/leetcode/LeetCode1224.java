@@ -10,6 +10,14 @@ import java.util.*;
  * @modifiedBy ：
  */
 public class LeetCode1224 {
+    /**
+     * 思路：计算每个元素出现的频率，每个频率的元素。从后往前遍历，每删除一个元素，检查是否满足条件。 如果满足条件，返回当前元素个数
+     * 实现：各种情况比较难一次考虑周全
+     * 算法复杂度：O(n)
+     * 空间复杂度: O(n)
+     * @param nums
+     * @return
+     */
     public int maxEqualFreq(int[] nums) {
         Map<Integer, Integer> numToCount = valueToCount(nums);
         Map<Integer, Set<Integer>> map = countToValues(numToCount);
@@ -114,5 +122,27 @@ public class LeetCode1224 {
             }
         }
         return false;
+    }
+
+    /**
+     * 解法二
+     * @param nums
+     * @return
+     */
+    public int maxEqualFreq2(int[] nums) {
+        int len = nums.length;
+        int []sub = new int[100001];
+        int []pre = new int[100001];
+        int res = 0;
+        int cur = 0;
+        for(int i=0;i<len;i++){
+            pre[++sub[nums[i]]]++;
+            cur = Math.max(sub[nums[i]],cur);
+            if(pre[cur]==1 && pre[cur-1] * (cur-1)+1 == (i+1) || (pre[cur]*cur+1==i+1)){
+                res=i+1;
+            }
+        }
+        if(cur == 1) return nums.length;
+        return res;
     }
 }
