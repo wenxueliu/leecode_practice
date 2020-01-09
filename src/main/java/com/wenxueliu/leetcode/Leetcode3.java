@@ -23,100 +23,67 @@ import java.util.Map;
  */
 public class Leetcode3 {
 
-    //仅仅击败了 8%
     public int lengthOfLongestSubstring(String s) {
-        List<Integer> target = new ArrayList<>();
-        List<Integer> source = StringToList(s);
-        int index = 0;
-        while (index < source.size()) {
-            List<Integer> tmpTarget = new ArrayList<>();
-            index = subSetOfNoDuplicated(source, index, tmpTarget);
-            if (tmpTarget.size() > target.size()) {
-                target = tmpTarget;
+        if (s == null) {
+            return 0;
+        }
+        Map<Character, Integer> map = new HashMap<>(256);
+        int maxLen = 0;
+        int start = 0;
+        for (int index = 0; index < s.length(); index++) {
+            if (map.containsKey(s.charAt(index))) {
+                /**
+                 * 这是关键，考虑 abba 的情况。
+                 */
+                start = Math.max(map.get(s.charAt(index)) + 1, start);
             }
+            map.put(s.charAt(index), index);
+            maxLen = Math.max(index - start + 1, maxLen);
         }
-        return target.size();
+        return maxLen;
     }
 
-    private List<Integer> StringToList(String str) {
-        List<Integer> strList = new ArrayList<>();
-        for (char ch : str.toCharArray()) {
-            strList.add(Integer.valueOf(ch));
-        }
-        return strList;
-    }
-
-    private int subSetOfNoDuplicated(final List<Integer> list, int startIndex, List<Integer> target) {
-        int size = list.size();
-        for (int index = startIndex; index < size; index++) {
-            Integer ele = list.get(index);
-            int indexOf = target.indexOf(ele);
-            if (indexOf == -1) {
-                target.add(ele);
-            } else {
-                return startIndex + indexOf + 1;
-            }
-        }
-        return size;
-    }
-
-
-    //没有调通
+    /**
+     * 思路与上面一致，重复利用字符范围的特性。极大提高时间
+     * @param s
+     * @return
+     */
     public int lengthOfLongestSubstring1(String s) {
-        Map<String, List<Integer>> map = new HashMap<>();
-        int length = s.length();
-
-        // a 0 3
-        // b 1 4 6 7
-        // c 2 5
-        for (int i = 0; i < length; i++) {
-            char c = s.charAt(i);
-            if (map.containsKey(String.valueOf(c))) {
-                List<Integer> list = map.get(String.valueOf(c));
-                list.add(i);
-                map.put(String.valueOf(c), list);
-            } else {
-                List<Integer> list = new ArrayList<Integer>();
-                list.add(i);
-                map.put(String.valueOf(c), list);
-            }
+        if (s == null) {
+            return 0;
         }
-
+        int []map = new int[128];
+        for (int i = 0; i < 128; i++) {
+            map[i] = -1;
+        }
         int maxLen = 0;
-        for (List<Integer> list : map.values()) {
-            int len = maxLength(list);
-            if (len > maxLen) {
-                maxLen = len;
-            }
+        int start = 0;
+        for (int index = 0; index < s.length(); index++) {
+            start = Math.max(map[s.charAt(index)] == -1 ? 0 : map[s.charAt(index)]+1, start);
+            map[s.charAt(index)] =  index;
+            maxLen = Math.max(index - start + 1, maxLen);
         }
-
-        int diffLen = 0;
-        int maxLen2 = 0;
-        for (int i = 0; i < length; i++) {
-            char c = s.charAt(i);
-            if (map.get(String.valueOf(c)).size() == 1) {
-                maxLen2++;
-            } else {
-
-                diffLen = maxLen2 + 1 < diffLen ? diffLen : maxLen2 + 1;
-                maxLen2 = 1;
-            }
-        }
-        //diffLen = maxLen2 > diffLen ? maxLen2 : diffLen;
-        return diffLen;
-        //return maxLen > diffLen + 2 ? maxLen : diffLen + 2;
+        return maxLen;
     }
 
-    int maxLength(List<Integer> list) {
-        if (list.size() == 1) {
-            return 1;
+
+    /**
+     * 这个解法看似和上面的解法一样，写正确却很难。通过每个字符实际索引加 1， 减少了冗余代码，但实现难度加大
+     * @param s
+     * @return
+     */
+    public int lengthOfLongestSubstring2(String s) {
+        if (s == null) {
+            return 0;
         }
+        int []map = new int[128];
         int maxLen = 0;
-        for (int i = 0; i < list.size() - 1; i++) {
-            int len = list.get(i+1) - list.get(i);
-            if (len > maxLen) {
-                maxLen = len;
-            }
+        int start = 0;
+        for (int index = 0; index < s.length(); index++) {
+            start = Math.max(map[s.charAt(index)], start);
+            // 核心在这里，这一定要为 index + 1。默认每个元素的索引加 1，避免了初始化每个元素为 -1
+            map[s.charAt(index)] =  index + 1;
+            maxLen = Math.max(index - start + 1, maxLen);
         }
         return maxLen;
     }
