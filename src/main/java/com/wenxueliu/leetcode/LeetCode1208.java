@@ -32,7 +32,7 @@ public class LeetCode1208 {
      * "abcd" "cddf" 5 == 3 -- 1 1 2.2 2.1.2
      * "jzmhzdq" "rymuemg" 17 -- 1 1 1 2.1.2 2.1.1
      */
-    public int equalSubstring(String s, String t, int maxCost) {
+    public int equalSubstring1(String s, String t, int maxCost) {
         int maxLen = 0;
 
         int len = s.length();
@@ -68,6 +68,37 @@ public class LeetCode1208 {
                     curGap += gap[index];
                     maxLen = Math.max(index - startIndex + 1, maxLen);
                 }
+            }
+        }
+        return maxLen;
+    }
+
+    /**
+     * 思路：滑动窗口，核心就是求解时，滑动窗口只增加不减少。实现简单，不容易出错。
+     * 实现：每次不满足条件，整个窗口移动
+     * 算法复杂度：O(N)
+     * 空间复杂度：O(N)
+     * 用时：20 分钟
+     * @param s
+     * @param t
+     * @param maxCost
+     * @return
+     */
+    public int equalSubstring(String s, String t, int maxCost) {
+        int len = s.length();
+        int gap[] = new int[len];
+        for (int index = 0; index < len; index++) {
+            gap[index] = Math.abs(s.charAt(index) - t.charAt(index));
+        }
+        int maxLen = 0;
+        int curGap = 0;
+        for (int gindex = 0, startIndex = 0 ; gindex < len; gindex++) {
+            if (curGap + gap[gindex] > maxCost) {
+                curGap = curGap + gap[gindex] - gap[startIndex];
+                startIndex++;
+            } else {
+                curGap += gap[gindex];
+                maxLen = Math.max(maxLen, gindex - startIndex + 1);
             }
         }
         return maxLen;
