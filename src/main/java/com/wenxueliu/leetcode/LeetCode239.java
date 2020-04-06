@@ -1,9 +1,6 @@
 package com.wenxueliu.leetcode;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.TreeMap;
+import java.util.*;
 
 /**
  * @author ： liuwenxue
@@ -152,7 +149,7 @@ public class LeetCode239 {
      * @param k
      * @return
      */
-    public int[] maxSlidingWindow(int[] nums, int k) {
+    public int[] maxSlidingWindow4(int[] nums, int k) {
         int len = nums.length;
         if (len == 0) {
             return new int[]{};
@@ -186,5 +183,23 @@ public class LeetCode239 {
             }
         }
         return out;
+    }
+
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        int len = nums.length;
+        PriorityQueue<Integer> priorityQueue = new PriorityQueue<>(k + 1, (o1, o2) -> o2 - o1);
+        int[] res = new int[len - k + 1];
+        for (int index = 0; index < k; index++) {
+            priorityQueue.add(nums[index]);
+        }
+        res[0] = priorityQueue.peek();
+        for (int index = k; index < len; index++) {
+            if (nums[index - k] != nums[index]) {
+                priorityQueue.remove(nums[index - k]);
+                priorityQueue.add(nums[index]);
+            }
+            res[index - k + 1] = priorityQueue.peek();
+        }
+        return res;
     }
 }

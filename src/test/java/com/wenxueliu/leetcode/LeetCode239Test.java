@@ -34,4 +34,11 @@ public class LeetCode239Test {
         Assert.assertArrayEquals(new int[] {3,3,5,5,6,7}, leetcode239.maxSlidingWindow3(new int[]{1,3,-1,-3,5,3,6,7}, 3));
         Assert.assertArrayEquals(new int[] {-1, 1}, leetcode239.maxSlidingWindow3(new int[]{-1, 1}, 1));
     }
+
+    @Test
+    public void maxSlidingWindow4() {
+        LeetCode239 leetcode239 = new LeetCode239();
+        Assert.assertArrayEquals(new int[] {3,3,5,5,6,7}, leetcode239.maxSlidingWindow4(new int[]{1,3,-1,-3,5,3,6,7}, 3));
+        Assert.assertArrayEquals(new int[] {-1, 1}, leetcode239.maxSlidingWindow4(new int[]{-1, 1}, 1));
+    }
 }
