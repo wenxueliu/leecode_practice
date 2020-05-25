@@ -125,4 +125,26 @@ public class LeetCode547 {
         }
         return count;
     }
+
+    /**
+     * 并查集
+     *
+     * @param M
+     * @return
+     */
+    public int findCircleNum3(int[][] M) {
+        int len = M.length;
+        UnionFind unionFind = new UnionFind(len);
+        for (int rowIndex = 0; rowIndex < len; rowIndex++) {
+            for (int colIndex = 0; colIndex < len; colIndex++) {
+                if (rowIndex == colIndex) {
+                    continue;
+                }
+                if (M[rowIndex][colIndex] == 1) {
+                    unionFind.union(rowIndex, colIndex);
+                }
+            }
+        }
+        return unionFind.count;
+    }
 }
