@@ -11,7 +11,6 @@ import java.util.List;
  * @modifiedBy ：
  */
 public class LeetCode102 {
-
     /**
      * 思路：递归并记录每层的深度，以深度作为索引
      * 实现： 略
@@ -52,34 +51,24 @@ public class LeetCode102 {
         if (root == null) {
             return res;
         }
-        List<TreeNode> curLevel = new ArrayList<>();
-        curLevel.add(root);
-        int depth = 0;
-        List<TreeNode> nextLevel = new ArrayList<>();
-        while (!curLevel.isEmpty()) {
-            //遍历拿到当前层元素
-            nextLevel.clear();
-            for (TreeNode node : curLevel) {
-                nextLevel.add(node);
-                if (res.size() <= depth) {
-                    List<Integer> oneLevel = new ArrayList<>();
-                    oneLevel.add(node.val);
-                    res.add(oneLevel);
-                } else {
-                    res.get(depth).add(node.val);
-                }
-            }
-            //添加下一层元素
-            curLevel.clear();
-            for (TreeNode node : nextLevel) {
+        List<TreeNode> stack = new ArrayList<>();
+        stack.add(root);
+        while (!stack.isEmpty()) {
+            List<TreeNode> currentRow = new ArrayList<>();
+            List<Integer> current = new ArrayList<>();
+            for (int index = 0; index < stack.size(); index++) {
+                TreeNode node = stack.get(index);
                 if (node.left != null) {
-                    curLevel.add(node.left);
+                    currentRow.add(node.left);
                 }
                 if (node.right != null) {
-                    curLevel.add(node.right);
+                    currentRow.add(node.right);
                 }
+                current.add(node.val);
             }
-            depth = depth + 1;
+            stack.clear();
+            stack.addAll(currentRow);
+            res.add(current);
         }
         return res;
     }
