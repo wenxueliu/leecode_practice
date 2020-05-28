@@ -41,4 +41,35 @@ public class LeetCode46 {
         }
         return dstArray;
     }
+
+    /**
+     * 分析参考
+     * https://leetcode-cn.com/problems/permutations/solution/hui-su-suan-fa-python-dai-ma-java-dai-ma-by-liweiw/
+     * @param nums
+     * @return
+     */
+    public List<List<Integer>> permute1(int[] nums) {
+        List<List<Integer>> res = new ArrayList<>();
+        List<Integer> path = new ArrayList<>();
+        boolean []visited = new boolean[nums.length];
+        dfs(0, nums, path, res, visited);
+        return res;
+    }
+
+    void dfs(int depth, int[] nums, List<Integer> path, List<List<Integer>> res, boolean []visited) {
+        if (depth == nums.length) {
+            res.add(new ArrayList<>(path));
+            return;
+        }
+        for (int index = 0; index < nums.length; index++) {
+            if (visited[index]) {
+                continue;
+            }
+            visited[index] = true;
+            path.add(nums[index]);
+            dfs(depth + 1, nums, path, res, visited);
+            path.remove(path.size()-1);
+            visited[index] = false;
+        }
+    }
 }
