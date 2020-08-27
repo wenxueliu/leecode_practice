@@ -1,46 +1,87 @@
 package com.wenxueliu.leetcode;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /**
-* @author liuwenxue
-* @date 2020-05-29
-*/
+ * @author liuwenxue
+ * @date 2020-05-29
+ */
 public class LeetCode47 {
 
+    /**
+     * 与 46 的区别只有一行
+     *
+     * @param nums
+     * @return
+     */
     public List<List<Integer>> permuteUnique(int[] nums) {
+        int len = nums.length;
         List<List<Integer>> res = new ArrayList<>();
-        if (nums.length == 0) {
-            return res;
-        }
-        Arrays.sort(nums);
-        List<Integer> path = new ArrayList<>();
-        boolean[] vistied = new boolean[nums.length];
-        dfs(0, nums, path, res, vistied);
+        List<Integer> target = new ArrayList<>();
+        boolean[] visit = new boolean[len];
+        dfs(nums, 0, visit, target, res);
         return res;
     }
 
-    void dfs(int depth, int[] nums, List<Integer> path, List<List<Integer>> res, boolean []visited) {
-        if (depth == nums.length) {
-            res.add(new ArrayList<>(path));
+    void dfs(int[] nums, int depth, boolean[] visit, List<Integer> target, List<List<Integer>> res) {
+        if (nums.length == depth) {
+            if (res.contains(target)) {
+                return;
+            }
+            res.add(new ArrayList<>(target));
             return;
         }
         for (int index = 0; index < nums.length; index++) {
-            if (visited[index]) {
+            if (visit[index]) {
                 continue;
             }
-            // 与 46 唯一的变化点
-            if (index > 0 && nums[index] == nums[index-1] && !visited[index-1]) {
-                continue;
-            }
-            visited[index] = true;
-            path.add(nums[index]);
-            dfs(depth + 1, nums, path, res, visited);
-            visited[index] = false;
-            path.remove(path.size() - 1);
+            visit[index] = true;
+            target.add(nums[index]);
+            dfs(nums, depth + 1, visit, target, res);
+            target.remove(target.size() - 1);
+            visit[index] = false;
         }
     }
+
+    public List<List<Integer>> permuteUnique1(int[] nums) {
+        int len = nums.length;
+        List<List<Integer>> res = new ArrayList<>();
+        if (len == 0) {
+            return res;
+        }
+        // 排序（升序或者降序都可以），排序是剪枝的前提
+        Arrays.sort(nums);
+        boolean[] used = new boolean[len];
+        // 使用 Deque 是 Java 官方 Stack 类的建议
+        Deque<Integer> path = new ArrayDeque<>(len);
+        dfs1(nums, len, 0, used, path, res);
+        return res;
+    }
+
+    private void dfs1(int[] nums, int len, int depth, boolean[] used, Deque<Integer> path, List<List<Integer>> res) {
+        if (depth == len) {
+            res.add(new ArrayList<>(path));
+            return;
+        }
+        for (int i = 0; i < len; ++i) {
+            if (used[i]) {
+                continue;
+            }
+            // 剪枝条件：i > 0 是为了保证 nums[i - 1] 有意义
+            // 写 !used[i - 1] 是因为 nums[i - 1] 在深度优先遍历的过程中刚刚被撤销选择
+            if (i > 0 && nums[i] == nums[i - 1] && !used[i - 1]) {
+                continue;
+            }
+
+            path.addLast(nums[i]);
+            used[i] = true;
+
+            dfs1(nums, len, depth + 1, used, path, res);
+            // 回溯部分的代码，和 dfs 之前的代码是对称的
+            used[i] = false;
+            path.removeLast();
+        }
+    }
+
+
 }

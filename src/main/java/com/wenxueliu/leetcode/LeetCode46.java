@@ -45,18 +45,19 @@ public class LeetCode46 {
     /**
      * 分析参考
      * https://leetcode-cn.com/problems/permutations/solution/hui-su-suan-fa-python-dai-ma-java-dai-ma-by-liweiw/
+     *
      * @param nums
      * @return
      */
     public List<List<Integer>> permute1(int[] nums) {
         List<List<Integer>> res = new ArrayList<>();
         List<Integer> path = new ArrayList<>();
-        boolean []visited = new boolean[nums.length];
+        boolean[] visited = new boolean[nums.length];
         dfs(0, nums, path, res, visited);
         return res;
     }
 
-    void dfs(int depth, int[] nums, List<Integer> path, List<List<Integer>> res, boolean []visited) {
+    void dfs(int depth, int[] nums, List<Integer> path, List<List<Integer>> res, boolean[] visited) {
         if (depth == nums.length) {
             res.add(new ArrayList<>(path));
             return;
@@ -68,8 +69,41 @@ public class LeetCode46 {
             visited[index] = true;
             path.add(nums[index]);
             dfs(depth + 1, nums, path, res, visited);
-            path.remove(path.size()-1);
+            path.remove(path.size() - 1);
             visited[index] = false;
+        }
+    }
+
+
+    /**
+     * 2020-08-27 用模板的方法
+     *
+     * @param nums
+     * @return
+     */
+    public List<List<Integer>> permute3(int[] nums) {
+        int len = nums.length;
+        List<List<Integer>> res = new ArrayList<>();
+        List<Integer> target = new ArrayList<>();
+        boolean[] visit = new boolean[len];
+        dfs(nums, 0, visit, target, res);
+        return res;
+    }
+
+    void dfs(int[] nums, int depth, boolean[] visit, List<Integer> target, List<List<Integer>> res) {
+        if (nums.length == depth) {
+            res.add(new ArrayList<>(target));
+            return;
+        }
+        for (int index = 0; index < nums.length; index++) {
+            if (visit[index]) {
+                continue;
+            }
+            visit[index] = true;
+            target.add(nums[index]);
+            dfs(nums, depth + 1, visit, target, res);
+            target.remove(target.size() - 1);
+            visit[index] = false;
         }
     }
 }

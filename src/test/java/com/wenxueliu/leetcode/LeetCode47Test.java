@@ -8,7 +8,11 @@ public class LeetCode47Test {
 
     @Test
     public void permuteUnique() {
-        LeetCode47 leetCode47 = new LeetCode47();
-        System.out.println(leetCode47.permuteUnique(new int[]{1, 1, 2}));
+        System.out.println(new LeetCode47().permuteUnique(new int[]{1, 1, 2, 2}));
+    }
+
+    @Test
+    public void permuteUnique1() {
+        System.out.println(new LeetCode47().permuteUnique1(new int[]{1, 1, 2, 2}));
     }
 }

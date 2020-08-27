@@ -11,13 +11,54 @@ import java.util.List;
 */
 public class LeetCode40 {
     /**
-     *  重复元素的条件是难点
+     * 标准模板解法
      *
      * @param candidates
      * @param target
      * @return
      */
     public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        List<Integer> tmp = new ArrayList<>();
+        List<List<Integer>> res = new ArrayList<>();
+        boolean[] visit = new boolean[candidates.length];
+        dfs(candidates, 0, target, visit, tmp, res);
+        return res;
+    }
+
+    void dfs(int[] candidates, int startIndex, int target, boolean[] visit, List<Integer> tmp, List<List<Integer>> res) {
+        if (target < 0) {
+            return;
+        }
+        if (target == 0) {
+            List<Integer> t = new ArrayList<>(tmp);
+            Collections.sort(t);
+            if (!res.contains(t)) {
+                res.add(t);
+            }
+            return;
+        }
+        for (int index = startIndex; index < candidates.length; index++) {
+            if (visit[index]) {
+                continue;
+            }
+            visit[index] = true;
+            target -= candidates[index];
+            tmp.add(candidates[index]);
+            dfs(candidates, 0, target, visit, tmp, res);
+            visit[index] = false;
+            target += candidates[index];
+            tmp.remove(tmp.size() - 1);
+        }
+    }
+
+    /**
+     *  对解法优化
+     *
+     * @param candidates
+     * @param target
+     * @return
+     */
+    public List<List<Integer>> combinationSum22(int[] candidates, int target) {
         List<List<Integer>> res = new ArrayList<>();
         if (candidates.length == 0) {
             return res;

@@ -11,4 +11,10 @@ public class LeetCode46Test {
         LeetCode46 leetCode46 = new LeetCode46();
         System.out.println(leetCode46.permute1(new int[]{1, 2, 3}));
     }
+
+    @Test
+    public void permute3() {
+        LeetCode46 leetCode46 = new LeetCode46();
+        System.out.println(leetCode46.permute3(new int[]{1, 2, 3}));
+    }
 }
