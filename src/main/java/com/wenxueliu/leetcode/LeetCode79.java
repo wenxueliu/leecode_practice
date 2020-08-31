@@ -6,6 +6,15 @@ package com.wenxueliu.leetcode;
  */
 public class LeetCode79 {
     int [][]direction = new int[][] {{0, 1}, {0, -1,}, {1, 0}, {-1, 0}};
+
+    /**
+     * 要好好读题
+     *
+     * 条件比较多，当前应该有优化空间
+     * @param board
+     * @param word
+     * @return
+     */
     public boolean exist(char[][] board, String word) {
         int row = board.length;
         int col = board[0].length;
