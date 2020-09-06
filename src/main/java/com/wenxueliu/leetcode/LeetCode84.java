@@ -54,7 +54,7 @@ public class LeetCode84 {
                 int heightIndex = stack.pop();
                 int height = tmp[heightIndex];
                 int leftIndex = stack.peek();
-                area = Math.max(area, (rightIndex - leftIndex - 1) * height)
+                area = Math.max(area, (rightIndex - leftIndex - 1) * height);
             }
             stack.push(index);
         }
