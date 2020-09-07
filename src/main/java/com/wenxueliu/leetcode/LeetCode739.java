@@ -7,6 +7,12 @@ import java.util.Stack;
  * @date 2020-09-07
  */
 public class LeetCode739 {
+    /**
+     * 单调栈的最直接用法
+     *
+     * @param T
+     * @return
+     */
     public int[] dailyTemperatures(int[] T) {
         Stack<Integer> stack = new Stack<>();
         int len = T.length;
@@ -37,9 +43,5 @@ public class LeetCode739 {
 
         }
         return res;
-    }
-
-    public static void main(String[] args) {
-        new LeetCode739().dailyTemperatures1(new int[]{73, 74, 75, 71, 69, 72, 76, 73});
     }
 }
