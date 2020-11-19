@@ -12,7 +12,7 @@ public class LeetCode33 {
 
     /**
      * 思路：自己解法思路比较混乱，没有梳理清楚。 这里思路看起来清晰，但是细节需要非常注意
-     * 实现：考虑情况
+     * [实现](https://leetcode-cn.com/problems/search-in-rotated-sorted-array/solution/sou-suo-xuan-zhuan-pai-xu-shu-zu-by-leetcode-solut/)
      * @param nums
      * @param target
      * @return
